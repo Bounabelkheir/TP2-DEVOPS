@@ -16,10 +16,10 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-      - name: Build application
-        run: |
-          # Commandes pour compiler votre application Java
-          ./mvnw clean package  # Exemple avec Maven
+          distribution: 'adopt'
+          server-id: 'github'
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
 
   test:
     name: Test
@@ -32,14 +32,12 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-      - name: Install dependencies
-        run: |
-          # Commandes pour installer les dépendances nécessaires aux tests
-          ./mvnw install  # Exemple avec Maven
-      - name: Run automated tests
-        run: |
-          # Commandes pour exécuter des tests automatisés
-          ./mvnw test  # Exemple avec Maven
+          distribution: 'adopt'
+          server-id: 'github'
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Ajoutez d'autres étapes de test ici
 
   deployment:
     name: Deployment
@@ -48,8 +46,5 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Deploy to production
-        run: |
-          # Commandes pour déployer votre application dans un environnement de production
-          # Exemple: Utiliser des outils comme Docker, Ansible, ou simplement copier les fichiers sur un serveur
-          ./deploy.sh  # Exemple de script de déploiement
+
+      # Ajoutez les étapes de déploiement ici
